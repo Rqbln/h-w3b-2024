@@ -1,0 +1,1 @@
+Un fichier pour le contrat principal écrit en LIGO (vous pouvez choisir entre PascaLIGO, CameLIGO, ou ReasonLIGO en fonction de votre préférence). Ce fichier contiendra la logique principale de votre contrat.
