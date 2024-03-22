@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "@airgap/beacon-sdk": "^4.1.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/material": "^5.15.14",
+    "@react-buddy/ide-toolbox": "^2.4.0",
     "@taquito/taquito": "^19.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
