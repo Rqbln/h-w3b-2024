@@ -1,9 +1,9 @@
-// @ts-ignore
-import React, { useState } from 'react';
+import * as React from 'react';
 import { Box, CssBaseline, ThemeProvider, createTheme, PaletteMode } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
+import {useState} from "react";
 
 const AboutPage = () => {
     const [mode, setMode] = useState<PaletteMode>('light');
