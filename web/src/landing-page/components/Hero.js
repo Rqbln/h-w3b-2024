@@ -80,7 +80,7 @@ export default function Hero() {
                     })}
                 >
                     <img
-                        src="../../../public/main_page.png"
+                        src="main_page.png"
                         alt="Main Page"
                         style={{
                             position: 'absolute', // Position absolue pour l'image
