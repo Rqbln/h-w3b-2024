@@ -88,7 +88,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'left' }}>
                             <MenuItem component="a" href="/quizz">
                                 <Typography variant="body2" color="text.primary">
-                                    Quizz
+                                    Duel
                                 </Typography>
                             </MenuItem>
                             <MenuItem component="a" href="/ranking">
