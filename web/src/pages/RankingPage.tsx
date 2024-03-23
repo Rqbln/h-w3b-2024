@@ -1,61 +1,69 @@
 import * as React from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useState } from 'react';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Container, Paper, Slide } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
-import { useState } from "react";
 
-interface Row {
+interface Rank {
     name: string;
     score: number;
 }
 
-const createData = (name: string, score: number): Row => {
+const createData = (name: string, score: number): Rank => {
     return { name, score };
 }
 
-const rows: Row[] = [
-    createData('tz1exempleUn', 159),
-    createData('tz2exempleDeux', 237),
-    createData('tz3exempleTrois', 262),
+const rows: Rank[] = [
+    createData('tz1Winner', 300),
+    createData('tz2Second', 250),
+    createData('tz3Third', 200),
+    // Ajouter plus d'exemples si nécessaire
+    createData('tz4Fourth', 150),
+    createData('tz5Fifth', 100),
+    createData('tz6Sixth', 90),
+    createData('tz7Seventh', 80),
+    createData('tz8Eighth', 70),
+    createData('tz9Ninth', 60),
+    createData('tz10Tenth', 50),
 ];
 
 const RankingPage: React.FC = () => {
     const [mode, setMode] = useState<'light' | 'dark'>('dark');
     const theme = createTheme(getLPTheme(mode));
 
-    // Ajout de la fonction toggleColorMode
-    const toggleColorMode = () => {
+    // Définition de la fonction toggleColorMode pour changer le thème
+    const toggleColorMode = (): void => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
     };
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppAppBar mode={mode} toggleColorMode={toggleColorMode} /> {/* Mise à jour pour inclure toggleColorMode */}
-            <Box sx={{ pt: 8, pb: 6 }}>
-                <Typography variant="h2" gutterBottom>
-                    Ranking Page
+            <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+            <Box sx={{ pt: 8, pb: 6, textAlign: 'center' }}>
+                <Typography variant="h4" gutterBottom component="div">
+                    Podium
                 </Typography>
-                <Container maxWidth="md">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Adresse Tezos</TableCell>
-                                    <TableCell align="right">Score</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">{row.name}</TableCell>
-                                        <TableCell align="right">{row.score}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                <Container>
+                    {rows.slice(0, 3).map((row, index) => (
+                        <Slide direction="up" in={true} mountOnEnter unmountOnExit timeout={(index + 1) * 500} key={row.name}>
+                            <Paper elevation={4} sx={{ p: 2, mb: 2, backgroundColor: index === 0 ? 'gold' : index === 1 ? 'silver' : '#cd7f32' }}>
+                                <Typography variant="h6">{index + 1}. {row.name}</Typography>
+                                <Typography>Score: {row.score}</Typography>
+                            </Paper>
+                        </Slide>
+                    ))}
+                </Container>
+                <Typography variant="h5" gutterBottom component="div" sx={{ mt: 4 }}>
+                    Les suivants
+                </Typography>
+                <Container>
+                    {rows.slice(3).map((row, index) => (
+                        <Paper elevation={2} sx={{ p: 1, mb: 1, backgroundColor: 'background.paper' }} key={row.name}>
+                            <Typography>{index + 4}. {row.name} - Score: {row.score}</Typography>
+                        </Paper>
+                    ))}
                 </Container>
             </Box>
             <Footer />
