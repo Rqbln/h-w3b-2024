@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme, Typography, PaletteMode } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
-import { useState } from "react";
 
 const AboutPage = () => {
-    const [mode, setMode] = useState<PaletteMode>('light');
+    const [mode, setMode] = useState('light');
     const theme = createTheme(getLPTheme(mode));
 
     const toggleColorMode = () => {
@@ -32,8 +31,7 @@ const AboutPage = () => {
                         variant="h2"
                         sx={{
                             fontSize: 'clamp(3rem, 10vw, 4rem)',
-                            color: (theme) =>
-                                theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                            color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
                         }}
                     >
                         About
