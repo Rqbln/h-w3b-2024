@@ -85,7 +85,7 @@ const AboutPage = () => {
                         fontSize: 'clamp(3rem, 10vw, 4rem)',
                     }}
                 >
-                    Page&nbsp;
+                    A&nbsp;
                     <Typography
                         component="span"
                         variant="h2"
@@ -94,10 +94,25 @@ const AboutPage = () => {
                             color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
                         }}
                     >
-                        About
+                        Propos
                     </Typography>
                 </Typography>
             </Box>
+            <Container sx={{ py: 4 }}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} md={6}>
+                        <img src={'../../public/trophy.png'} alt={'Illustration'} style={{ width: '100%', height: 'auto' }} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h5" gutterBottom>
+                            Apprenez, gagnez, faites vous remarquez.
+                        </Typography>
+                        <Typography>
+                            Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget ligula vitae nisi tincidunt dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Container>
             <Container sx={{ py: 4 }}>
                 <Typography variant="h5" sx={{ mb: 4 }}>
                     Notre équipe formée spécialement pour ce Hackaton
