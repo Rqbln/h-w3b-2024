@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ToggleColorMode from './ToggleColorMode';
 
 const logoStyle = {
-    width: '140px',
+    width: '35px',
     height: 'auto',
     cursor: 'pointer',
 };
