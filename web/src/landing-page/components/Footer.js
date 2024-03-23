@@ -55,15 +55,6 @@ export default function Footer() {
           }}
         >
           <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-            <Box sx={{ ml: '-15px' }}>
-              <img
-                src={
-                    '../../../logo.png'
-                }
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
-            </Box>
             <Typography variant="body2" fontWeight={600} gutterBottom>
               Newsletter
             </Typography>
@@ -149,15 +140,30 @@ export default function Footer() {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          pt: { xs: 4, sm: 8 },
           width: '100%',
-          borderTop: '1px solid',
           borderColor: 'divider',
         }}
       >
         <div>
           <Copyright />
         </div>
+        <Box
+          sx={{
+            flexGrow: 0.02,
+            display: 'flex',
+            alignItems: 'center',
+            mb: '-4px',
+            px: 0,
+          }}
+        >
+          <a href="/">
+            <img
+              src='../../../grey_logo.png'
+                style={logoStyle}
+                alt="logo"
+            />
+          </a>
+        </Box>
         <Stack
           direction="row"
           justifyContent="left"
