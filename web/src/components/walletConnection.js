@@ -1,5 +1,6 @@
 // walletConnection.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { DAppClient } from "@airgap/beacon-sdk"; // Importez DAppClient depuis @airgap/beacon-sdk
 import { connectWallet, checkIfWalletConnected, getBalance } from '../services/walletService';
 
 const WalletContext = createContext();
@@ -9,21 +10,20 @@ export const WalletProvider = ({ children }) => {
     const [walletBalance, setWalletBalance] = useState(null);
 
     const handleConnectWallet = async () => {
+        const dAppClient = new DAppClient({ name: "YourAppName" }); // Créez une instance de DAppClient
         try {
-            console.log("Tentative de connexion au portefeuille...");
+            console.log("Attempting to connect wallet..."); // Ajoutez ce console.log
+
             const address = await connectWallet();
             if (address) {
-                console.log("Adresse du portefeuille mise à jour:", address);
                 setWalletAddress(address);
                 const balance = await getBalance(address);
-                console.log("Solde du portefeuille mis à jour:", balance);
                 setWalletBalance(balance);
             }
         } catch (error) {
-            console.error("Erreur lors de la connexion au portefeuille:", error);
+            console.error(error);
         }
     };
-
 
     useEffect(() => {
         const init = async () => {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme, IconButton, Avatar, Button, Box, AppBar, Toolbar, Container, Typography, MenuItem } from '@mui/material';
-import { connectWallet, checkIfWalletConnected, getBalance } from '../../services/walletService';
-import ToggleColorMode from './ToggleColorMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Web3 from 'web3';
 
 const logoStyle = {
     width: '35px',
@@ -17,28 +16,30 @@ function AppAppBar({ mode, toggleColorMode }) {
     const theme = useTheme();
 
     useEffect(() => {
-        const initWallet = async () => {
-            const address = await checkIfWalletConnected();
-            if (address) {
-                setWalletAddress(address);
-                const balance = await getBalance(address);
-                setWalletBalance(balance);
+        const initMetaMask = async () => {
+            if (window.ethereum) {
+                try {
+                    // Request account access if needed
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    // Instantiate web3 with MetaMask provider
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.getAccounts();
+                    const address = accounts[0];
+                    setWalletAddress(address);
+                    const balance = await web3.eth.getBalance(address);
+                    setWalletBalance(web3.utils.fromWei(balance, 'ether')); // Convert to ether
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                alert('MetaMask not detected! Please install MetaMask.');
             }
         };
 
         window.addEventListener('scroll', () => setElevateAppBar(window.scrollY > 0));
-        initWallet();
+        initMetaMask();
         return () => window.removeEventListener('scroll', () => setElevateAppBar(window.scrollY > 0));
     }, []);
-
-    const handleConnectWallet = async () => {
-        const address = await connectWallet();
-        if (address) {
-            setWalletAddress(address);
-            const balance = await getBalance(address);
-            setWalletBalance(balance);
-        }
-    };
 
     return (
         <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', mt: 2 }}>
@@ -112,7 +113,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     >
                         {walletAddress ? (
                             <>
-                                <Typography variant="body2">{`${walletBalance} XTZ`}</Typography>
+                                <Typography variant="body2">{`${walletBalance} ETH`}</Typography>
                                 <IconButton href="/account" size="small">
                                     <Avatar sx={{ bgcolor: 'secondary.main' }}>
                                         <AccountCircleIcon fontSize="small" />
@@ -121,7 +122,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 <Typography variant="body2">{`${walletAddress.slice(0, 10)}...`}</Typography>
                             </>
                         ) : (
-                            <Button color="secondary" variant="contained" onClick={handleConnectWallet}>
+                            <Button color="secondary" variant="contained" onClick={() => window.ethereum.request({ method: 'eth_requestAccounts' })}>
                                 Connect Wallet
                             </Button>
                         )}

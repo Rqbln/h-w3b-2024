@@ -101,7 +101,7 @@ const AboutPage = () => {
             <Container sx={{ py: 4 }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
-                        <img src={'../../public/trophy.png'} alt={'Illustration'} style={{ width: '100%', height: 'auto' }} />
+                        <img src={'trophy.png'} alt={'Illustration'} style={{ width: '100%', height: 'auto' }} />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h5" gutterBottom>
