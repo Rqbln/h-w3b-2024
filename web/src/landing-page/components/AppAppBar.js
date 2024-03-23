@@ -83,7 +83,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 alignItems: 'center',
                             }}
                         >
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                            {/*<ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />*/}
                             <Button
                                 color="primary"
                                 variant="text"
