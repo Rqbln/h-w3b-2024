@@ -2,16 +2,16 @@ import { alpha } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
 export const brand = {
-  50: '#F0F7FF',
-  100: '#CEE5FD',
-  200: '#9CCCFC',
-  300: '#55A6F6',
-  400: '#0A66C2',
-  500: '#0959AA',
-  600: '#064079',
-  700: '#033363',
-  800: '#02294F',
-  900: '#021F3B',
+  50: '#9a67ea',  // Violet clair
+  100: '#9a67ea',  // Violet clair
+  200: '#9a67ea',  // Violet clair
+  300: '#9a67ea',  // Violet clair
+  400: '#7824e7',  // Violet principal
+  500: '#7824e7',  // Violet principal
+  600: '#7824e7',  // Violet principal
+  700: '#5e35b1',  // Violet foncé
+  800: '#5e35b1',  // Violet foncé
+  900: '#5e35b1',  // Violet foncé
 };
 
 export const secondary = {

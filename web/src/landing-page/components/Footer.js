@@ -84,7 +84,7 @@ export default function Footer() {
                   ariaLabel: 'Enter your email address',
                 }}
               />
-              <Button variant="contained" color="primary" sx={{ flexShrink: 0 }}>
+              <Button variant="contained" color="secondary" sx={{ flexShrink: 0 }}>
                 Subscribe
               </Button>
             </Stack>

@@ -85,7 +85,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                         >
                             {/*<ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />*/}
                             <Button
-                                color="primary"
+                                color="secondary"
                                 variant="text"
                                 size="small"
                                 component="a"
@@ -94,7 +94,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 Sign in
                             </Button>
                             <Button
-                                color="primary"
+                                color="secondary"
                                 variant="contained"
                                 size="small"
                                 component="a"

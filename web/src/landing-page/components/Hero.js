@@ -83,7 +83,7 @@ export default function Hero() {
                 ariaLabel: 'Enter your email address',
               }}
             />
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="secondary">
               Start now
             </Button>
           </Stack>
