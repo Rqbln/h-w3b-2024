@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme, Typography } from '@mui/material';
+import React from 'react';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography, alpha } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
 
 const AboutPage = () => {
     const [mode, setMode] = React.useState('dark');
-    const [showCustomTheme, setShowCustomTheme] = React.useState(true);
     const theme = createTheme(getLPTheme(mode));
-    const defaultTheme = createTheme({ palette: { mode } });
-
-    const toggleColorMode = () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-    };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
-            <Box sx={{ pt: 8, pb: 6, textAlign: 'center' }}>
+            <AppAppBar mode={mode} />
+            <Box
+                sx={{
+                    pt: { xs: 14, sm: 20 },
+                    pb: { xs: 8, sm: 12 },
+                    textAlign: 'center',
+                    width: '100%',
+                    backgroundImage:
+                        theme.palette.mode === 'light'
+                            ? `linear-gradient(180deg, ${alpha('#5e35b1', 0.3)}, ${alpha('#FFF', 0.3)})`
+                            : `linear-gradient(${alpha('#5e35b1', 0.3)}, ${alpha('#090E10', 0.0)})`,
+                    backgroundSize: '100% 80%',
+                    backgroundRepeat: 'no-repeat',
+                }}
+            >
                 <Typography
                     variant="h2"
                     component="h1"
