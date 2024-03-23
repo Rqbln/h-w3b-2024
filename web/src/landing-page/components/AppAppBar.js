@@ -53,7 +53,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                             {/* Envelopper l'image du logo avec un élément <a> */}
                             <a href="/">
                                 <img
-                                    src='../../../public/logo512.png'
+                                    src='../../../logo.png'
                                     style={logoStyle}
                                     alt="logo"
                                 />

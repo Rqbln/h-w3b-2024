@@ -58,7 +58,7 @@ export default function Footer() {
             <Box sx={{ ml: '-15px' }}>
               <img
                 src={
-                    '../../../public/logo.png'
+                    '../../../logo.png'
                 }
                 style={logoStyle}
                 alt="logo of sitemark"
@@ -100,20 +100,11 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Product
           </Typography>
-          <Link color="text.secondary" href="#">
-            Features
+          <Link color="text.secondary" href="/quizz">
+            Quizz
           </Link>
-          <Link color="text.secondary" href="#">
-            Testimonials
-          </Link>
-          <Link color="text.secondary" href="#">
-            Highlights
-          </Link>
-          <Link color="text.secondary" href="#">
-            Pricing
-          </Link>
-          <Link color="text.secondary" href="#">
-            FAQs
+          <Link color="text.secondary" href="/ranking">
+            Ranking
           </Link>
         </Box>
         <Box
@@ -126,11 +117,8 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Company
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="/about">
             About us
-          </Link>
-          <Link color="text.secondary" href="#">
-            Careers
           </Link>
           <Link color="text.secondary" href="#">
             Press
@@ -146,9 +134,6 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Legal
           </Typography>
-          <Link color="text.secondary" href="#">
-            Terms
-          </Link>
           <Link color="text.secondary" href="#">
             Privacy
           </Link>
@@ -181,7 +166,7 @@ export default function Footer() {
         >
           <IconButton
             color="inherit"
-            href="https://github.com/mui"
+            href="https://github.com/Rqbln/h-w3b-2024"
             aria-label="GitHub"
             sx={{ alignSelf: 'center' }}
           >
@@ -189,7 +174,7 @@ export default function Footer() {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://twitter.com/MaterialUI"
+            href="#"
             aria-label="X"
             sx={{ alignSelf: 'center' }}
           >
@@ -197,7 +182,7 @@ export default function Footer() {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://www.linkedin.com/company/mui/"
+            href="#"
             aria-label="LinkedIn"
             sx={{ alignSelf: 'center' }}
           >
