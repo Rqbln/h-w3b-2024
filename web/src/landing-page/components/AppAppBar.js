@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme, IconButton, Avatar, Button, Box, AppBar, Toolbar, Container, Typography, MenuItem } from '@mui/material';
+import { connectWallet, checkIfWalletConnected, getBalance } from '../../services/walletService';
+import ToggleColorMode from './ToggleColorMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {useWallet, WalletProvider} from '../../components/walletConnection'; // Assurez-vous que le chemin d'importation est correct
 
 const logoStyle = {
     width: '35px',
@@ -9,23 +10,37 @@ const logoStyle = {
     cursor: 'pointer',
 };
 
-function AppAppBar() {
+function AppAppBar({ mode, toggleColorMode }) {
     const [elevateAppBar, setElevateAppBar] = useState(false);
-    const { walletAddress, walletBalance, handleConnectWallet } = useWallet();
+    const [walletAddress, setWalletAddress] = useState(null);
+    const [walletBalance, setWalletBalance] = useState(null);
     const theme = useTheme();
 
-
     useEffect(() => {
-        const handleScroll = () => {
-            setElevateAppBar(window.scrollY > 0);
+        const initWallet = async () => {
+            const address = await checkIfWalletConnected();
+            if (address) {
+                setWalletAddress(address);
+                const balance = await getBalance(address);
+                setWalletBalance(balance);
+            }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', () => setElevateAppBar(window.scrollY > 0));
+        initWallet();
+        return () => window.removeEventListener('scroll', () => setElevateAppBar(window.scrollY > 0));
     }, []);
 
+    const handleConnectWallet = async () => {
+        const address = await connectWallet();
+        if (address) {
+            setWalletAddress(address);
+            const balance = await getBalance(address);
+            setWalletBalance(balance);
+        }
+    };
+
     return (
-        <WalletProvider>
         <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', mt: 2 }}>
             <Container maxWidth="lg">
                 <Toolbar
@@ -64,7 +79,7 @@ function AppAppBar() {
                         >
                             <a href="/">
                                 <img
-                                    src='../../../public/logo.png'
+                                    src='../../../logo.png'
                                     style={logoStyle}
                                     alt="logo"
                                 />
@@ -114,7 +129,6 @@ function AppAppBar() {
                 </Toolbar>
             </Container>
         </AppBar>
-        </WalletProvider>
     );
 }
 
