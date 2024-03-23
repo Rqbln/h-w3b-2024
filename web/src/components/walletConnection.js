@@ -10,6 +10,8 @@ export const WalletProvider = ({ children }) => {
 
     const handleConnectWallet = async () => {
         try {
+            console.log("Attempting to connect wallet..."); // Ajoutez ce console.log
+
             const address = await connectWallet();
             if (address) {
                 setWalletAddress(address);
