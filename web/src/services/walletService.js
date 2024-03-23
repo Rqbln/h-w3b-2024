@@ -1,19 +1,20 @@
 // src/services/walletService.js
 
-import { TezosToolkit } from '@taquito/taquito';
-import { BeaconWallet } from '@taquito/beacon-wallet';
+import {TezosToolkit} from '@taquito/taquito';
+import {BeaconWallet} from '@taquito/beacon-wallet';
 
 const tezos = new TezosToolkit('https://ghostnet.teztnets.xyz');
 const wallet = new BeaconWallet({
-    name: 'Votre DApp',
+    name: 'Temple',
     preferredNetwork: 'ghostnet',
 });
+
+
 
 export const connectWallet = async () => {
     try {
         await wallet.requestPermissions({ network: { type: 'ghostnet' } });
-        const userAddress = await wallet.getPKH();
-        return userAddress;
+        return await wallet.getPKH();
     } catch (error) {
         console.error(error);
         return null;

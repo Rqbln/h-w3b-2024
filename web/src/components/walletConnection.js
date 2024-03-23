@@ -1,34 +1,43 @@
-// src/components/WalletConnection.js
+// walletConnection.js
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { connectWallet, checkIfWalletConnected, getBalance } from '../services/walletService';
 
-import React, { useState, useEffect } from 'react';
-import { connectWallet, checkIfWalletConnected } from '../services/walletService';
+const WalletContext = createContext();
 
-function WalletConnection() {
+export const WalletProvider = ({ children }) => {
     const [walletAddress, setWalletAddress] = useState(null);
+    const [walletBalance, setWalletBalance] = useState(null);
+
+    const handleConnectWallet = async () => {
+        try {
+            const address = await connectWallet();
+            if (address) {
+                setWalletAddress(address);
+                const balance = await getBalance(address);
+                setWalletBalance(balance);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     useEffect(() => {
         const init = async () => {
             const address = await checkIfWalletConnected();
-            setWalletAddress(address);
+            if (address) {
+                setWalletAddress(address);
+                const balance = await getBalance(address);
+                setWalletBalance(balance);
+            }
         };
-
         init();
     }, []);
 
-    const handleConnectWallet = async () => {
-        const address = await connectWallet();
-        setWalletAddress(address);
-    };
-
     return (
-        <div>
-            {walletAddress ? (
-                <p>Wallet Connected: {walletAddress}</p>
-            ) : (
-                <button onClick={handleConnectWallet}>Connect Wallet</button>
-            )}
-        </div>
+        <WalletContext.Provider value={{ walletAddress, walletBalance, handleConnectWallet }}>
+            {children}
+        </WalletContext.Provider>
     );
-}
+};
 
-export default WalletConnection;
+export const useWallet = () => useContext(WalletContext);
