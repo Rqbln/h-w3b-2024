@@ -542,7 +542,7 @@ export default function getLPTheme(mode) {
             color: '#fff',
             '&.Mui-checked + .MuiSwitch-track': {
               opacity: 1,
-            },
+            },mode
           },
         },
       },

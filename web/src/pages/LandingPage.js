@@ -55,7 +55,7 @@ ToggleCustomTheme.propTypes = {
 };
 */
 export default function LandingPage() {
-    const [mode, setMode] = React.useState('light');
+    const [mode, setMode] = React.useState('dark');
     const [showCustomTheme, setShowCustomTheme] = React.useState(true);
     //const LPtheme = createTheme(getLPTheme(mode));
     const defaultTheme = createTheme({ palette: { mode } });
@@ -64,9 +64,9 @@ export default function LandingPage() {
         setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
     };
 
-    const toggleCustomTheme = () => {
+    /*const toggleCustomTheme = () => {
         setShowCustomTheme((prev) => !prev);
-    };
+    };*/
 
     return (
         <ThemeProvider theme={defaultTheme}>
