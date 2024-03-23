@@ -4,56 +4,7 @@ import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
 
-const presentations = [
-    {
-        name: "Robin Quériaux",
-        description: "Développeur Fullstack passionné par la Blockchain",
-        image: "../../team/Robin_Queriaux.jpg",
-        alt: "Robin",
-        socials: [
-            { name: "Facebook", url: "#" },
-            { name: "Twitter", url: "#" },
-            { name: "LinkedIn", url: "#" },
-        ],
-    },
-
-
-    {
-        name: "Johan Martin-Borret",
-        description: "Développeur Fullstack passionné par la Blockchain",
-        image: '../../team/Johan_Martin_Borret.jpg',
-        alt: "Johan",
-        socials: [
-            { name: "Facebook", url: "#" },
-            { name: "Twitter", url: "#" },
-            { name: "LinkedIn", url: "#" },
-        ],
-    },
-
-    {
-        name: "Victor Mazloum",
-        description: "Développeur Fullstack passionné par la Blockchain",
-        image: "../../team/Victor_Mazloum.jpg",
-        alt: "Victor",
-        socials: [
-            { name: "Facebook", url: "#" },
-            { name: "Twitter", url: "#" },
-            { name: "LinkedIn", url: "#" },
-        ],
-    },
-
-    {
-        name: "Laouig Eleouët",
-        description: "Développeur Fullstack passionné par la Blockchain",
-        image: "../../team/Laouig_Eleouet.jpg",
-        alt: "Laouig",
-        socials: [
-            { name: "Facebook", url: "#" },
-            { name: "Twitter", url: "#" },
-            { name: "LinkedIn", url: "#" },
-        ],
-    },
-];
+const quizzs = ;
 
 const QuizzPage = () => {
     const [mode, setMode] = useState('dark');
