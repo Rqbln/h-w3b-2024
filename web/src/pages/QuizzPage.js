@@ -1,8 +1,59 @@
 import React, { useState } from 'react';
-import {Box, CssBaseline, ThemeProvider, createTheme, Typography, alpha} from '@mui/material';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Grid, Card, CardContent, CardActions, CardMedia, Button, Container, alpha } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
+
+const presentations = [
+    {
+        name: "Robin Quériaux",
+        description: "Développeur Fullstack passionné par la Blockchain",
+        image: "../../team/Robin_Queriaux.jpg",
+        alt: "Robin",
+        socials: [
+            { name: "Facebook", url: "#" },
+            { name: "Twitter", url: "#" },
+            { name: "LinkedIn", url: "#" },
+        ],
+    },
+
+
+    {
+        name: "Johan Martin-Borret",
+        description: "Développeur Fullstack passionné par la Blockchain",
+        image: '../../team/Johan_Martin_Borret.jpg',
+        alt: "Johan",
+        socials: [
+            { name: "Facebook", url: "#" },
+            { name: "Twitter", url: "#" },
+            { name: "LinkedIn", url: "#" },
+        ],
+    },
+
+    {
+        name: "Victor Mazloum",
+        description: "Développeur Fullstack passionné par la Blockchain",
+        image: "../../team/Victor_Mazloum.jpg",
+        alt: "Victor",
+        socials: [
+            { name: "Facebook", url: "#" },
+            { name: "Twitter", url: "#" },
+            { name: "LinkedIn", url: "#" },
+        ],
+    },
+
+    {
+        name: "Laouig Eleouët",
+        description: "Développeur Fullstack passionné par la Blockchain",
+        image: "../../team/Laouig_Eleouet.jpg",
+        alt: "Laouig",
+        socials: [
+            { name: "Facebook", url: "#" },
+            { name: "Twitter", url: "#" },
+            { name: "LinkedIn", url: "#" },
+        ],
+    },
+];
 
 const QuizzPage = () => {
     const [mode, setMode] = useState('dark');
@@ -51,6 +102,40 @@ const QuizzPage = () => {
                     </Typography>
                 </Typography>
             </Box>
+            <Container sx={{ py: 4 }}>
+                <Typography variant="h5" sx={{ mb: 4 }}>
+                    Notre équipe formée spécialement pour ce Hackaton
+                </Typography>
+                <Grid container spacing={4} justifyContent="center">
+                    {presentations.map((presentation, index) => (
+                        <Grid item xs={12} sm={6} key={index}>
+                            <Card sx={{ height: '100%' }}>
+                                <CardMedia
+                                    component="img"
+                                    height="img"
+                                    image={presentation.image}
+                                    alt={presentation.alt}
+                                />
+                                <CardContent>
+                                    <Typography variant="h5" gutterBottom>
+                                        {presentation.name}
+                                    </Typography>
+                                    <Typography>
+                                        {presentation.description}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    {presentation.socials.map((social, index) => (
+                                        <Button size="small" href={social.url} key={index}>
+                                            {social.name}
+                                        </Button>
+                                    ))}
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Container>
             <Footer />
         </ThemeProvider>
     );
