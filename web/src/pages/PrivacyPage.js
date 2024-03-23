@@ -4,7 +4,7 @@ import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
 
-const AboutPage = () => {
+const PrivacyPage = () => {
     const [mode, setMode] = React.useState('dark');
     const [showCustomTheme, setShowCustomTheme] = React.useState(true);
     const theme = createTheme(getLPTheme(mode));
@@ -36,7 +36,7 @@ const AboutPage = () => {
                             color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
                         }}
                     >
-                        About
+                        Privacy Policy
                     </Typography>
                 </Typography>
             </Box>
@@ -45,4 +45,4 @@ const AboutPage = () => {
     );
 };
 
-export default AboutPage;
+export default PrivacyPage;

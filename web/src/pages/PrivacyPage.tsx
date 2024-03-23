@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme, Typography } from '@mui/material';
+import * as React from 'react';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography, PaletteMode } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
+import { useState } from "react";
 
 const AboutPage = () => {
-    const [mode, setMode] = React.useState('dark');
-    const [showCustomTheme, setShowCustomTheme] = React.useState(true);
+    const [mode, setMode] = useState<PaletteMode>('dark');
     const theme = createTheme(getLPTheme(mode));
-    const defaultTheme = createTheme({ palette: { mode } });
 
     const toggleColorMode = () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={theme}>
             <CssBaseline />
             <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
             <Box sx={{ pt: 8, pb: 6, textAlign: 'center' }}>
@@ -33,10 +32,11 @@ const AboutPage = () => {
                         variant="h2"
                         sx={{
                             fontSize: 'clamp(3rem, 10vw, 4rem)',
-                            color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                            color: (theme) =>
+                                theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
                         }}
                     >
-                        About
+                        Privacy policy
                     </Typography>
                 </Typography>
             </Box>
@@ -45,4 +45,4 @@ const AboutPage = () => {
     );
 };
 
-export default AboutPage;
+export default PrivacyPage;
