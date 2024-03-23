@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import {Box, CssBaseline, ThemeProvider, createTheme, Typography, alpha} from '@mui/material';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography, alpha, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
 
+const createData = (name, score) => {
+    return { name, score };
+}
+
+const rows = [
+    createData('tz1exempleUn', 159),
+    createData('tz2exempleDeux', 237),
+    createData('tz3exempleTrois', 262),
+];
+
 const RankingPage = () => {
     const [mode, setMode] = useState('dark');
     const theme = createTheme(getLPTheme(mode));
-
-    const toggleColorMode = () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -30,26 +36,32 @@ const RankingPage = () => {
                     backgroundRepeat: 'no-repeat',
                 }}
             >
-                <Typography
-                    variant="h2"
-                    component="h1"
-                    sx={{
-                        fontWeight: 'bold',
-                        fontSize: 'clamp(3rem, 10vw, 4rem)',
-                    }}
-                >
+                <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', fontSize: 'clamp(3rem, 10vw, 4rem)' }}>
                     Page&nbsp;
-                    <Typography
-                        component="span"
-                        variant="h2"
-                        sx={{
-                            fontSize: 'clamp(3rem, 10vw, 4rem)',
-                            color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-                        }}
-                    >
+                    <Typography component="span" variant="h2" sx={{ fontSize: 'clamp(3rem, 10vw, 4rem)', color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light', }}>
                         Ranking
                     </Typography>
                 </Typography>
+                <Container maxWidth="md">
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Adresse Tezos</TableCell>
+                                    <TableCell align="right">Score</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                        <TableCell component="th" scope="row">{row.name}</TableCell>
+                                        <TableCell align="right">{row.score}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Container>
             </Box>
             <Footer />
         </ThemeProvider>
