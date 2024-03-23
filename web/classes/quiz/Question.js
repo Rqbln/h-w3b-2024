@@ -20,6 +20,10 @@ class Question {
     getReponsesPossibles() {
       return this._reponsesPossibles;
     }
+
+    getWeight() {
+      return this._weight;
+    }
   
     // Méthode pour sélectionner une réponse
     selectionnerReponse(index) {

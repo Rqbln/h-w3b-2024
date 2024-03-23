@@ -30,8 +30,20 @@ class Quizz {
         this._questions.push(question);
     }
 
+    getPonderationTotale() {
+        let res = 0;
+        this._questions.forEach(question => {
+            res+=question.getWeight();
+        })
+        return res;
+    }
+
     getScoreQuizz() {
         let score = 0;
+        this._questions.forEach(question => {
+            score += question.getScoreQuestion() * question.getWeight();
+        })
+        return score/this.getPonderationTotale();
     }
 
   }
