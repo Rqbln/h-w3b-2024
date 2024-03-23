@@ -11,7 +11,7 @@ import ToggleColorMode from './ToggleColorMode';
 import { Link } from 'react-router-dom';  // Importez Link
 
 const logoStyle = {
-    width: '140px',
+    width: '40px',
     height: 'auto',
     cursor: 'pointer',
 };
@@ -59,9 +59,9 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                             {/* Utilisez Link pour envelopper l'image du logo */}
                             <Link to="/">
                                 <img
-                                    src="../../../public/logo.png"
+                                    src={'../../../logo.png'}
                                     style={logoStyle}
-                                    alt="logo"
+                                    //alt="logo"
                                 />
                             </Link>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

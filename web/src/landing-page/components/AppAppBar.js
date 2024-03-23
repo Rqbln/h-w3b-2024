@@ -11,7 +11,7 @@ import ToggleColorMode from './ToggleColorMode';
 
 const logoStyle = {
     width: '35px',
-    height: 'auto',
+    height: '40px',
     cursor: 'pointer',
 };
 
@@ -46,19 +46,28 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 flexGrow: 1,
                                 display: 'flex',
                                 alignItems: 'center',
-                                ml: '-18px',
                                 px: 0,
                             }}
                         >
-                            {/* Envelopper l'image du logo avec un élément <a> */}
-                            <a href="/">
-                                <img
-                                    src='../../../logo.png'
-                                    style={logoStyle}
-                                    alt="logo"
-                                />
-                            </a>
-                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                            <Box
+                                sx={{
+                                    flexGrow: 0.02,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    mb: '-4px',
+                                    px: 0,
+                                }}
+                            >
+                                <a href="/">
+                                    <img
+                                        src='../../../logo.png'
+                                        style={logoStyle}
+                                        alt="logo"
+                                    />
+                                </a>
+                            </Box>
+                            <Box sx={{ display: { xs: 'none', md: 'flex' },
+                                        justifyContent: 'left',  }}>
                                 <MenuItem component="a" href="/quizz">
                                     <Typography variant="body2" color="text.primary">
                                         Quizz
@@ -83,7 +92,6 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 alignItems: 'center',
                             }}
                         >
-                            {/*<ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />*/}
                             <Button
                                 color="secondary"
                                 variant="text"
