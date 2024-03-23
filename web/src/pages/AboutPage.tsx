@@ -6,7 +6,7 @@ import Footer from '../landing-page/components/Footer';
 import { useState } from "react";
 
 const AboutPage = () => {
-    const [mode, setMode] = useState<PaletteMode>('light');
+    const [mode, setMode] = useState<PaletteMode>('dark');
     const theme = createTheme(getLPTheme(mode));
 
     const toggleColorMode = () => {

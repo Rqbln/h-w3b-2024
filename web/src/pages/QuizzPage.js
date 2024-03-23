@@ -5,7 +5,7 @@ import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
 
 const QuizzPage = () => {
-    const [mode, setMode] = useState('light');
+    const [mode, setMode] = useState('dark');
     const theme = createTheme(getLPTheme(mode));
 
     const toggleColorMode = () => {

@@ -11,7 +11,7 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
-    const [mode, setMode] = React.useState<PaletteMode>('light');
+    const [mode, setMode] = React.useState<PaletteMode>('dark');
     const theme = createTheme(getLPTheme(mode));
 
     const toggleColorMode = () => { // Définir une fonction pour basculer le mode
