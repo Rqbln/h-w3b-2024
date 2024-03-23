@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import ToggleColorMode from './ToggleColorMode';
+import { Link } from 'react-router-dom';  // Importez Link
 
 const logoStyle = {
     width: '140px',
@@ -55,58 +56,21 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 px: 0,
                             }}
                         >
-                            <img
-                                src={
-                                    'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                                }
-                                style={logoStyle}
-                                alt="logo"
-                            />
+                            {/* Utilisez Link pour envelopper l'image du logo */}
+                            <Link to="/">
+                                <img
+                                    src={
+                                        'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
+                                    }
+                                    style={logoStyle}
+                                    alt="logo"
+                                />
+                            </Link>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                                <MenuItem component="a" href="/quizz">
-                                    <Typography variant="body2" color="text.primary">
-                                        Quizz
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem component="a" href="/ranking">
-                                    <Typography variant="body2" color="text.primary">
-                                        Ranking
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem component="a" href="/about">
-                                    <Typography variant="body2" color="text.primary">
-                                        About
-                                    </Typography>
-                                </MenuItem>
+                                {/* Les autres éléments du menu */}
                             </Box>
                         </Box>
-                        <Box
-                            sx={{
-                                display: { xs: 'none', md: 'flex' },
-                                gap: 0.5,
-                                alignItems: 'center',
-                            }}
-                        >
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-                            <Button
-                                color="primary"
-                                variant="text"
-                                size="small"
-                                component="a"
-                                href="/signin"  // Adjust the href based on your routing
-                            >
-                                Sign in
-                            </Button>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                size="small"
-                                component="a"
-                                href="/signup"  // Adjust the href based on your routing
-                            >
-                                Sign up
-                            </Button>
-                        </Box>
+                        {/* La partie droite de la barre d'outils */}
                     </Toolbar>
                 </Container>
             </AppBar>

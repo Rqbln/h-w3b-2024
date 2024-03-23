@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import QuizzPage from "./pages/QuizzPage";
+import RankingPage from "./pages/RankingPage";
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/quizz" element={<QuizzPage />} />
+                <Route path="/ranking" element={<RankingPage />} />
             </Routes>
         </Router>
     );

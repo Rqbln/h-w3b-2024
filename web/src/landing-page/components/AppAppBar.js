@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { PaletteMode } from '@mui/material';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -15,12 +15,7 @@ const logoStyle = {
     cursor: 'pointer',
 };
 
-interface AppAppBarProps {
-    mode: PaletteMode;
-    toggleColorMode: () => void;
-}
-
-function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
+function AppAppBar({ mode, toggleColorMode }) {
     return (
         <div>
             <AppBar
@@ -55,13 +50,14 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 px: 0,
                             }}
                         >
-                            <img
-                                src={
-                                    'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                                }
-                                style={logoStyle}
-                                alt="logo"
-                            />
+                            {/* Envelopper l'image du logo avec un élément <a> */}
+                            <a href="/">
+                                <img
+                                    src='https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
+                                    style={logoStyle}
+                                    alt="logo"
+                                />
+                            </a>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 <MenuItem component="a" href="/quizz">
                                     <Typography variant="body2" color="text.primary">
@@ -93,7 +89,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 variant="text"
                                 size="small"
                                 component="a"
-                                href="/signin"  // Adjust the href based on your routing
+                                href="/signin"
                             >
                                 Sign in
                             </Button>
@@ -102,7 +98,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 variant="contained"
                                 size="small"
                                 component="a"
-                                href="/signup"  // Adjust the href based on your routing
+                                href="/signup"
                             >
                                 Sign up
                             </Button>
