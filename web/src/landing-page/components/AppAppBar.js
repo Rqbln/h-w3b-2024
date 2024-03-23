@@ -1,5 +1,5 @@
-import React from 'react';
-import { PaletteMode } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { PaletteMode, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,21 +16,26 @@ const logoStyle = {
 };
 
 function AppAppBar({ mode, toggleColorMode }) {
+    const [elevateAppBar, setElevateAppBar] = useState(false);
+    const theme = useTheme();
+
+    const handleScroll = () => {
+        setElevateAppBar(window.scrollY > 0);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <div>
-            <AppBar
-                position="fixed"
-                sx={{
-                    boxShadow: 0,
-                    bgcolor: 'transparent',
-                    backgroundImage: 'none',
-                    mt: 2,
-                }}
-            >
+        <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', mt: 2 }}>
                 <Container maxWidth="lg">
                     <Toolbar
                         variant="regular"
-                        sx={(theme) => ({
+                        sx={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
@@ -39,8 +44,13 @@ function AppAppBar({ mode, toggleColorMode }) {
                             maxHeight: 40,
                             border: '1px solid',
                             borderColor: 'divider',
-                        })}
+                            bgcolor: elevateAppBar ? theme.palette.background.paper : 'transparent',
+                            backdropFilter: elevateAppBar ? 'blur(20px)' : 'none',
+                            opacity: elevateAppBar ? 1 : 1,
+                            transition: 'background-color 0.3s, opacity 0.3s, backdrop-filter 0.3s',
+                        }}
                     >
+
                         <Box
                             sx={{
                                 flexGrow: 1,
@@ -67,7 +77,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 </a>
                             </Box>
                             <Box sx={{ display: { xs: 'none', md: 'flex' },
-                                        justifyContent: 'left',  }}>
+                                justifyContent: 'left',  }}>
                                 <MenuItem component="a" href="/quizz">
                                     <Typography variant="body2" color="text.primary">
                                         Quizz
@@ -114,7 +124,6 @@ function AppAppBar({ mode, toggleColorMode }) {
                     </Toolbar>
                 </Container>
             </AppBar>
-        </div>
     );
 }
 
