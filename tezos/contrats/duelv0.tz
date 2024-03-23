@@ -1,0 +1,60 @@
+import smartpy as sp
+
+class QuizDuel(sp.Contract):
+    def __init__(self, initiator, opponent, stake):
+        self.init(
+            initiator=initiator, 
+            opponent=opponent, 
+            stake=sp.mutez(stake),
+            initiatorScore=sp.nat(0), 
+            opponentScore=sp.nat(0),
+            winner=sp.none, 
+            stakesDeposited=sp.mutez(0)
+        )
+
+    @sp.entrypoint
+    def depositStake(self):
+        sp.verify((sp.sender == self.data.initiator) | (sp.sender == self.data.opponent), "Not a participant")
+        sp.verify(sp.amount == self.data.stake, "Incorrect stake amount")
+        self.data.stakesDeposited += sp.amount
+
+    @sp.entrypoint
+    def submitScore(self, score):
+        sp.verify((sp.sender == self.data.initiator) | (sp.sender == self.data.opponent), "Not a participant")
+        sp.verify(sp.utils.mutez_to_nat(self.data.stakesDeposited) == 2 * sp.utils.mutez_to_nat(self.data.stake), "Stakes not fully deposited")
+        sp.if sp.sender == self.data.initiator:
+            self.data.initiatorScore = score
+        sp.else:
+            self.data.opponentScore = score
+        sp.if (self.data.initiatorScore > 0) & (self.data.opponentScore > 0):
+            self.calculateWinner()
+
+    def calculateWinner(self):
+        sp.if self.data.initiatorScore > self.data.opponentScore:
+            self.data.winner = sp.some(self.data.initiator)
+        sp.else:
+            self.data.winner = sp.some(self.data.opponent)
+        # Directly transfer winnings without using another entrypoint
+        sp.if self.data.winner.is_some():
+            sp.send(self.data.winner.open_some(), self.data.stakesDeposited)
+            self.data.stakesDeposited = sp.mutez(0)  # Reset stakes after transfer
+
+if "templates" not in __name__:
+    @sp.add_test(name = "Quiz Duel")
+    def test():
+        initiator = sp.test_account("Initiator")
+        opponent = sp.test_account("Opponent")
+        stake = 1000000 # 1 Tez as an example
+
+        contract = QuizDuel(initiator.address, opponent.address, stake)
+        scenario = sp.test_scenario()
+        scenario.h1("Quiz Duel Contract")
+        scenario += contract
+
+        scenario.h2("Stake Submission")
+        scenario += contract.depositStake().run(sender=initiator, amount=sp.mutez(stake))
+        scenario += contract.depositStake().run(sender=opponent, amount=sp.mutez(stake))
+
+        scenario.h2("Score Submission and Winner Determination")
+        scenario += contract.submitScore(80).run(sender=initiator)
+        scenario += contract.submitScore(90).run(sender=opponent)

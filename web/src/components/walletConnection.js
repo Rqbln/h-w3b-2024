@@ -10,18 +10,20 @@ export const WalletProvider = ({ children }) => {
 
     const handleConnectWallet = async () => {
         try {
-            console.log("Attempting to connect wallet..."); // Ajoutez ce console.log
-
+            console.log("Tentative de connexion au portefeuille...");
             const address = await connectWallet();
             if (address) {
+                console.log("Adresse du portefeuille mise à jour:", address);
                 setWalletAddress(address);
                 const balance = await getBalance(address);
+                console.log("Solde du portefeuille mis à jour:", balance);
                 setWalletBalance(balance);
             }
         } catch (error) {
-            console.error(error);
+            console.error("Erreur lors de la connexion au portefeuille:", error);
         }
     };
+
 
     useEffect(() => {
         const init = async () => {
