@@ -3,6 +3,7 @@ import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Grid, Card, C
 import AppAppBar from '../landing-page/components/AppAppBar';
 import getLPTheme from '../landing-page/getLPTheme';
 import Footer from '../landing-page/components/Footer';
+import axios from 'axios';
 
 const QuizzPage = () => {
     const [mode, setMode] = useState('dark');
@@ -11,13 +12,11 @@ const QuizzPage = () => {
 
     useEffect(() => {
         const fetchQuizzs = async () => {
-            const response = await fetch('http://localhost:3000/api/quizz');
-            if (response.ok) {
-                const data = await response.json();
-                setQuizzs(data);
-            } else {
-                // Gérez les erreurs ici...
-                console.error('Erreur lors de la récupération des quizz');
+            try {
+                const response = await axios.get('/api/quizzs');
+                setQuizzs(response.data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des quizz:', error);
             }
         };
 
@@ -28,82 +27,6 @@ const QuizzPage = () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
     };
 
-    /*return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <AppAppBar mode={mode} />
-            <Box
-                sx={{
-                    pt: { xs: 14, sm: 20 },
-                    pb: { xs: 8, sm: 12 },
-                    textAlign: 'center',
-                    width: '100%',
-                    backgroundImage:
-                        theme.palette.mode === 'light'
-                            ? `linear-gradient(180deg, ${alpha('#5e35b1', 0.3)}, ${alpha('#FFF', 0.3)})`
-                            : `linear-gradient(${alpha('#5e35b1', 0.3)}, ${alpha('#090E10', 0.0)})`,
-                    backgroundSize: '100% 80%',
-                    backgroundRepeat: 'no-repeat',
-                }}
-            >
-                <Typography
-                    variant="h2"
-                    component="h1"
-                    sx={{
-                        fontWeight: 'bold',
-                        fontSize: 'clamp(3rem, 10vw, 4rem)',
-                    }}
-                >
-                    Page&nbsp;
-                    <Typography
-                        component="span"
-                        variant="h2"
-                        sx={{
-                            fontSize: 'clamp(3rem, 10vw, 4rem)',
-                            color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-                        }}
-                    >
-                        Quizz
-                    </Typography>
-                </Typography>
-            </Box>
-            <Container sx={{ py: 4 }}>
-                <Typography variant="h5" sx={{ mb: 4 }}>
-                    Notre équipe formée spécialement pour ce Hackaton
-                </Typography>
-                <Grid container spacing={4} justifyContent="center">
-                    {presentations.map((presentation, index) => (
-                        <Grid item xs={12} sm={6} key={index}>
-                            <Card sx={{ height: '100%' }}>
-                                <CardMedia
-                                    component="img"
-                                    height="img"
-                                    image={presentation.image}
-                                    alt={presentation.alt}
-                                />
-                                <CardContent>
-                                    <Typography variant="h5" gutterBottom>
-                                        {presentation.name}
-                                    </Typography>
-                                    <Typography>
-                                        {presentation.description}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    {presentation.socials.map((social, index) => (
-                                        <Button size="small" href={social.url} key={index}>
-                                            {social.name}
-                                        </Button>
-                                    ))}
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
-            <Footer />
-        </ThemeProvider>
-    );*/
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -144,17 +67,31 @@ const QuizzPage = () => {
                 </Typography>
             </Box>
             <Container sx={{ py: 4 }}>
-                {quizzs.map((quizz, index) => (
-                    <Container key={index} sx={{ paddingBottom: 2 }}>
-                        <Grid container spacing={2} justifyContent="center">
-                            <Grid item xs={12}>
-                                <Typography variant="h5" gutterBottom>
-                                    {quizz.titre}
-                                </Typography>
-                            </Grid>
+                <Typography variant="h5" sx={{ mb: 4 }}>
+                    Découvrez nos quizz
+                </Typography>
+                <Grid container spacing={4} justifyContent="center">
+                    {quizzs.map((quizz, index) => (
+                        <Grid item xs={12} sm={6} key={index}>
+                            <Card sx={{ height: '100%' }}>
+                                <CardContent>
+                                    <Typography variant="h5" gutterBottom>
+                                        {quizz.titre}
+                                    </Typography>
+                                    <Typography>
+                                        Auteur: {quizz.auteur}
+                                    </Typography>
+                                    <Typography>
+                                        Thème: {quizz.theme}
+                                    </Typography>
+                                    <Typography>
+                                        Date: {new Date(quizz.date).toLocaleDateString()}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
                         </Grid>
-                    </Container>
-                ))}
+                    ))}
+                </Grid>
             </Container>
             <Footer />
         </ThemeProvider>
