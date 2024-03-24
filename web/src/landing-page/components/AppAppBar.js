@@ -19,15 +19,28 @@ function AppAppBar({ mode, toggleColorMode }) {
         const initMetaMask = async () => {
             if (window.ethereum) {
                 try {
-                    // Request account access if needed
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    // Instantiate web3 with MetaMask provider
-                    const web3 = new Web3(window.ethereum);
-                    const accounts = await web3.eth.getAccounts();
-                    const address = accounts[0];
-                    setWalletAddress(address);
-                    const balance = await web3.eth.getBalance(address);
-                    setWalletBalance(web3.utils.fromWei(balance, 'ether')); // Convert to ether
+                    // Vérifier si les données de l'utilisateur sont stockées dans le localStorage
+                    const storedAddress = localStorage.getItem('walletAddress');
+                    const storedBalance = localStorage.getItem('walletBalance');
+
+                    if (storedAddress && storedBalance) {
+                        // Si les données existent, les utiliser
+                        setWalletAddress(storedAddress);
+                        setWalletBalance(storedBalance);
+                    } else {
+                        // Sinon, demander l'accès au compte et instancier web3
+                        await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const web3 = new Web3(window.ethereum);
+                        const accounts = await web3.eth.getAccounts();
+                        const address = accounts[0];
+                        setWalletAddress(address);
+                        const balance = await web3.eth.getBalance(address);
+                        setWalletBalance(web3.utils.fromWei(balance, 'ether')); // Convert to ether
+
+                        // Stocker les données dans le localStorage
+                        localStorage.setItem('walletAddress', address);
+                        localStorage.setItem('walletBalance', web3.utils.fromWei(balance, 'ether'));
+                    }
                 } catch (error) {
                     console.error(error);
                 }
@@ -111,7 +124,9 @@ function AppAppBar({ mode, toggleColorMode }) {
                             alignItems: 'center',
                         }}
                     >
-                        {walletAddress ? (
+                        {walletAddress === null ? (
+                            <Typography variant="body2">Chargement...</Typography> // Afficher un message de chargement
+                        ) : walletAddress ? (
                             <>
                                 <Typography variant="body2">{`52.47 XTZ`}</Typography>
                                 <IconButton href="/account" size="small">
