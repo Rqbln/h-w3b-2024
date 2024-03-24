@@ -7,7 +7,7 @@ import Footer from '../landing-page/components/Footer';
 const presentations = [
     {
         name: "Robin Quériaux",
-        description: "Développeur React et responsable marketing",
+        description: "Chargé Marketing & Développeur React",
         image: "../../team/Robin_Queriaux.jpeg",
         alt: "Robin",
         socials: [
@@ -20,7 +20,7 @@ const presentations = [
 
     {
         name: "Johan Martin-Borret",
-        description: "Développeur Web et Manager",
+        description: "Chargé commercial",
         image: '../../team/Johan_Martin_Borret.jpg',
         alt: "Johan",
         socials: [
@@ -32,7 +32,7 @@ const presentations = [
 
     {
         name: "Victor Mazloum",
-        description: "Développeur Fullstack passionné par la Blockchain",
+        description: "Développeur web & blockchain",
         image: "../../team/Victor_Mazloum.jpeg",
         alt: "Victor",
         socials: [
@@ -44,7 +44,7 @@ const presentations = [
 
     {
         name: "Laouig Eleouët",
-        description: "Développeur Fullstack passionné par la Blockchain",
+        description: "Développeur web & blockchain",
         image: "../../team/Laouig_Eleouet.jpeg",
         alt: "Laouig",
         socials: [
@@ -108,7 +108,7 @@ const AboutPage = () => {
                             Apprenez, gagnez, faites vous remarquez.
                         </Typography>
                         <Typography>
-                            Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget ligula vitae nisi tincidunt dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                        Wizos est une plateforme de formation et de certification accessible à tous, conçue pour permettre à quiconque de se hisser parmis les meilleurs développeurs blockchain et ainsi de bénéficier d'offres d'emplois exceptionnelles. Né en mars 2024, ce projet vise à s'implémenter officiellement en septembre sur la blockchain Tezos.
                         </Typography>
                     </Grid>
                 </Grid>
