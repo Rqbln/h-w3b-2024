@@ -7,7 +7,7 @@ import Footer from '../landing-page/components/Footer';
 const presentations = [
     {
         name: "Robin Quériaux",
-        description: "Chargé Marketing & Développeur React",
+        description: "Chargé Marketing & Dev. React",
         image: "../../team/Robin_Queriaux.jpeg",
         alt: "Robin",
         socials: [
@@ -66,7 +66,7 @@ const AboutPage = () => {
             <Box
                 sx={{
                     pt: { xs: 14, sm: 20 },
-                    pb: { xs: 8, sm: 12 },
+                    pb: { xs: 8, sm: 5 },
                     textAlign: 'center',
                     width: '100%',
                     backgroundImage:
@@ -98,19 +98,60 @@ const AboutPage = () => {
                     </Typography>
                 </Typography>
             </Box>
-            <Container sx={{ py: 4 }}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12} md={6}>
-                        <img src={'trophy.png'} alt={'Illustration'} style={{ width: '100%', height: 'auto' }} />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Typography variant="h5" gutterBottom>
-                            Apprenez, gagnez, faites vous remarquez.
+            <Container
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    pt: { xs: 14, sm: 0 },
+                    pb: { xs: 8, sm: 12 },
+                }}
+            >
+                <Grid container spacing={4} direction="column" alignItems="center">
+                    <Grid item xs={12}>
+                        <Grid item xs={12} style={{ textAlign: 'center' }}>
+                        <Typography variant="h4" gutterBottom>
+                            Apprenez, gagnez, faites-vous remarquer.
                         </Typography>
-                        <Typography>
-                        Wizos est une plateforme de formation et de certification accessible à tous, conçue pour permettre à quiconque de se hisser parmis les meilleurs développeurs blockchain et ainsi de bénéficier d'offres d'emplois exceptionnelles. Né en mars 2024, ce projet vise à s'implémenter officiellement en septembre sur la blockchain Tezos.
-                        </Typography>
+                        </Grid>
+                        <Grid item xs={12} style={{ textAlign: 'justify' }}> {/* Assurez le centrage du texte */}
+                            <Typography
+                                sx={{
+                                    fontSize: 'clamp(1.25rem, 2.5vw, 1rem)', // Taille de police augmentée
+                                    maxWidth: { sm: '90%', md: '70%' }, // Contrôle de la largeur maximale
+                                    margin: '0 auto', // Centre le texte horizontalement
+                                }}
+                            >
+                                Wizos est une plateforme de formation et de certification accessible à tous, conçue pour permettre à quiconque de se hisser parmi les meilleurs développeurs blockchain et ainsi de bénéficier d'offres d'emplois exceptionnelles. Né en mars 2024, ce projet vise à s'implémenter officiellement en septembre sur la blockchain Tezos.
+                            </Typography>
+                        </Grid>
                     </Grid>
+                    <Box
+                        sx={(theme) => ({
+                            mt: { xs: 8, sm: 5 },
+                            alignSelf: 'center',
+                            height: { xs: 200, sm: 650 }, // Ajustez la hauteur comme nécessaire
+                            width: '80%',
+                            position: 'relative',
+                            borderRadius: '10px',
+                            outline: '1px solid',
+                            outlineColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.light,
+                            boxShadow: theme.palette.mode === 'dark' ? `0 0 12px 8px ${alpha(theme.palette.primary.main, 0.2)}` : `0 0 24px 12px ${alpha(theme.palette.primary.light, 0.2)}`,
+                        })}
+                    >
+                        <img
+                            src={'trophy.png'} // Source de votre image
+                            alt="Trophy"
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                height: '100%',
+                                width: '100%',
+                                objectFit: 'cover',
+                            }}
+                        />
+                    </Box>
                 </Grid>
             </Container>
             <Container sx={{ py: 4 }}>
@@ -119,7 +160,7 @@ const AboutPage = () => {
                 </Typography>
                 <Grid container spacing={4} justifyContent="center">
                     {presentations.map((presentation, index) => (
-                        <Grid item xs={12} sm={6} key={index}>
+                        <Grid item xs={12} sm={3} key={index}>
                             <Card sx={{ height: '100%' }}>
                                 <CardMedia
                                     component="img"
