@@ -75,10 +75,7 @@ const ProfilePage = () => {
                                     <Typography variant="h5" mb={1}>Pseudo: WIZOS</Typography>
                                     <Typography variant="body1" mb={1}>Votre balance: {profile.balance}</Typography>
                                     <Typography variant="body1" mb={1}>Vos Badges:</Typography>
-                                    {/* Liste des badges */}
-                                    {profile.badges.map((badge, index) => (
-                                        <Typography key={index} variant="body2">{badge}</Typography>
-                                    ))}
+
                                     {/* Lien pour explorer */}
                                     <Link href={`https://ghostnet.tzkt.io/${profile.address}`} target="_blank" rel="noopener" sx={{ color: 'white', mt: 2 }}>
                                         Explorer
