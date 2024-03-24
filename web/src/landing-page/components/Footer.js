@@ -32,6 +32,18 @@ export default function Footer() {
     const offset = 20; // Changer la valeur selon vos besoins
 
     return (
+        <Box
+            component="footer"
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: { xs: 4, sm: 8 },
+                py: { xs: 8, sm: 10 },
+                mt: '100', // Ajoutez ceci pour pousser le footer en bas
+                textAlign: { sm: 'center', md: 'left' },
+                width: '100%',
+            }}
+        >
         <footer className="footer" style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Container
                 sx={{
@@ -202,5 +214,6 @@ export default function Footer() {
                 </Box>
             </Container>
         </footer>
+        </Box>
     );
 }

@@ -6,6 +6,7 @@ import AccountPage from './pages/AccountPage';
 import QuizzPage from "./pages/QuizzPage";
 import RankingPage from "./pages/RankingPage";
 import PrivacyPage from "./pages/PrivacyPage";
+import './App.css'; // Import the CSS file here
 
 function App() {
     return (
