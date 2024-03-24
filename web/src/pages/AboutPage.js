@@ -7,8 +7,8 @@ import Footer from '../landing-page/components/Footer';
 const presentations = [
     {
         name: "Robin Quériaux",
-        description: "Développeur Fullstack passionné par la Blockchain",
-        image: "../../team/Robin_Queriaux.jpg",
+        description: "Développeur React et responsable marketing",
+        image: "../../team/Robin_Queriaux.jpeg",
         alt: "Robin",
         socials: [
             { name: "Facebook", url: "#" },
@@ -20,7 +20,7 @@ const presentations = [
 
     {
         name: "Johan Martin-Borret",
-        description: "Développeur Fullstack passionné par la Blockchain",
+        description: "Développeur Web et Manager",
         image: '../../team/Johan_Martin_Borret.jpg',
         alt: "Johan",
         socials: [
@@ -33,7 +33,7 @@ const presentations = [
     {
         name: "Victor Mazloum",
         description: "Développeur Fullstack passionné par la Blockchain",
-        image: "../../team/Victor_Mazloum.jpg",
+        image: "../../team/Victor_Mazloum.jpeg",
         alt: "Victor",
         socials: [
             { name: "Facebook", url: "#" },
@@ -45,7 +45,7 @@ const presentations = [
     {
         name: "Laouig Eleouët",
         description: "Développeur Fullstack passionné par la Blockchain",
-        image: "../../team/Laouig_Eleouet.jpg",
+        image: "../../team/Laouig_Eleouet.jpeg",
         alt: "Laouig",
         socials: [
             { name: "Facebook", url: "#" },

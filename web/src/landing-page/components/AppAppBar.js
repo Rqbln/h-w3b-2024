@@ -113,7 +113,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     >
                         {walletAddress ? (
                             <>
-                                <Typography variant="body2">{`${walletBalance} ETH`}</Typography>
+                                <Typography variant="body2">{`52.47 XTZ`}</Typography>
                                 <IconButton href="/account" size="small">
                                     <Avatar sx={{ bgcolor: 'secondary.main' }}>
                                         <AccountCircleIcon fontSize="small" />
