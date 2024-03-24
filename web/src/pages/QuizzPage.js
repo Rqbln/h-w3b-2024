@@ -1,34 +1,9 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Container, Button, Fade, CircularProgress, LinearProgress, Snackbar } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
-import Confetti from 'react-confetti';
+import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Container, Button, Fade, CircularProgress, LinearProgress, Snackbar, Alert } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import Footer from '../landing-page/components/Footer';
 import getLPTheme from '../landing-page/getLPTheme';
-
-const questions = [
-    {
-        questionText: 'Quel est le mécanisme de consensus de Tezos?',
-        answerOptions: [
-            { answerText: 'Proof of Work', isCorrect: false },
-            { answerText: 'Proof of Stake', isCorrect: false },
-            { answerText: 'Liquid Proof of Stake', isCorrect: true },
-        ],
-    },
-    {
-        questionText: 'Quel langage est utilisé pour écrire des smart contracts sur Tezos?',
-        answerOptions: [
-            { answerText: 'Solidity', isCorrect: false },
-            { answerText: 'Michelson', isCorrect: true },
-            { answerText: 'Vyper', isCorrect: false },
-        ],
-    },
-    // Ajoutez d'autres questions selon vos souhaits
-];
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 const QuizzPage = () => {
     const [mode, setMode] = useState('dark');
@@ -38,6 +13,49 @@ const QuizzPage = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    const questions = [
+        {
+            questionText: 'Quel est le mécanisme de consensus de Tezos?',
+            answerOptions: [
+                { answerText: 'Proof of Work', isCorrect: false },
+                { answerText: 'Proof of Stake', isCorrect: false },
+                { answerText: 'Liquid Proof of Stake', isCorrect: true },
+            ],
+        },
+        {
+            questionText: 'Quel langage est utilisé pour écrire des smart contracts sur Tezos?',
+            answerOptions: [
+                { answerText: 'Solidity', isCorrect: false },
+                { answerText: 'Michelson', isCorrect: true },
+                { answerText: 'Vyper', isCorrect: false },
+            ],
+        },
+        {
+            questionText: 'Qui est le créateur de Tezos?',
+            answerOptions: [
+                { answerText: 'Vitalik Buterin', isCorrect: false },
+                { answerText: 'Arthur Breitman', isCorrect: true },
+                { answerText: 'Dan Larimer', isCorrect: false },
+            ],
+        },
+        {
+            questionText: 'Quel est le token natif de Tezos?',
+            answerOptions: [
+                { answerText: 'XTZ', isCorrect: true },
+                { answerText: 'BTC', isCorrect: false },
+                { answerText: 'ETH', isCorrect: false },
+            ],
+        },
+        {
+            questionText: 'Dans quel langage Michelson est-il compilé?',
+            answerOptions: [
+                { answerText: 'JavaScript', isCorrect: false },
+                { answerText: 'Liquidity', isCorrect: false },
+                { answerText: 'SmartPy', isCorrect: true },
+            ],
+        },
+    ];
 
     const startQuiz = () => {
         setLoading(true);
@@ -61,10 +79,7 @@ const QuizzPage = () => {
         }
     };
 
-    const handleCloseSnackbar = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
+    const handleCloseSnackbar = () => {
         setOpenSnackbar(false);
     };
 
@@ -95,20 +110,20 @@ const QuizzPage = () => {
                                         {answerOption.answerText}
                                     </Button>
                                 ))}
-                                <LinearProgress variant="determinate" value={(currentQuestion + 1) / questions.length * 100} sx={{ mt: 4 }} />
+                                <LinearProgress variant="determinate" value={(currentQuestion + 1) / questions.length * 100} sx={{ mt: 4, mb: 3 }} />
                             </Box>
                         </Fade>
                     </Container>
                 )}
                 {!showQuiz && !loading && currentQuestion === questions.length && (
                     <>
-                        <Typography variant="h5" sx={{ mt: 4 }}>
+                        <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
                             Quiz terminé ! Votre score est de {score} sur {questions.length}.
                         </Typography>
-                        <Confetti />
                         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-                            <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                                Félicitations ! Vous avez complété le quiz avec un score de {score} sur {questions.length}.
+                            <Alert onClose={handleCloseSnackbar} severity="success" sx={{ display: 'flex', alignItems: 'center' }}>
+                                <CheckCircleOutlineIcon sx={{ mr: 2 }} />
+                                Félicitations ! Votre score de {score} sur {questions.length} a été soumis.
                             </Alert>
                         </Snackbar>
                     </>
@@ -120,4 +135,3 @@ const QuizzPage = () => {
 };
 
 export default QuizzPage;
-
