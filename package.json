@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@craco/craco": "^7.1.0",
-    "@taquito/beacon-wallet": "^19.1.0",
-    "stream-browserify": "^3.0.0",
-    "web3": "^4.6.0"
-  }
-}

@@ -46,7 +46,7 @@ const RankingPage = () => {
                     textAlign: 'center',
                     width: '100%',
                     backgroundImage: `linear-gradient(${alpha(theme.palette.primary.dark, 0.3)}, ${alpha(theme.palette.background.default, 0.0)})`,
-                    backgroundSize: '100% 80%',
+                    backgroundSize: '100% 25%',
                     backgroundRepeat: 'no-repeat',
                     color: 'white',
                 }}
@@ -59,7 +59,7 @@ const RankingPage = () => {
                         fontSize: 'clamp(3rem, 10vw, 4rem)',
                     }}
                 >
-                    Page&nbsp;<Typography component="span" variant="h2" sx={{ color: theme.palette.primary.main }}>Ranking</Typography>
+                    Page&nbsp;<Typography component="span" variant="h1" sx={{ color: theme.palette.primary.main }}>Ranking</Typography>
                 </Typography>
                 <Typography variant="h6" sx={{ mb: 4 }}>
                     Classement des utilisateurs Wizos sur les 7 derniers jours
