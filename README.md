@@ -30,4 +30,4 @@ Le répertoire contient plusieurs dossiers et fichiers, dont voici une descripti
 
 ## Licence
 
-Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence Apache-2.0. Consultez le fichier `LICENSE` pour plus de détails.
