@@ -4,7 +4,7 @@
 
 ## Description
 
-Ce référentiel, `h-w3b-2024`, contient le code source de la plateforme Wizos développée en 2024. 
+Ce référentiel contient le code source de la plateforme Wizos développée lors du hackaton `H-W3B` en mars 2024. 
 Wizos est une application proposant des formations / certifications décentralisées permettant de démarquer grâce à la blockchain les meilleurs développeurs, afin de leur offrir des ouvertures professionnelles.
 
 ## Structure du répertoire
