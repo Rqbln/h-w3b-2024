@@ -8,7 +8,9 @@ import AppAppBar from '../landing-page/components/AppAppBar';
 import Footer from '../landing-page/components/Footer';
 import getLPTheme from '../landing-page/getLPTheme';
 
+// Définir le composant QuizzPage
 const QuizzPage = () => {
+    // Déclaration des états avec useState
     const [mode, setMode] = useState('dark');
     const theme = createTheme(getLPTheme(mode));
     const [loading, setLoading] = useState(false);
@@ -17,6 +19,38 @@ const QuizzPage = () => {
     const [score, setScore] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [finalMessageDisplayed, setFinalMessageDisplayed] = useState(false);
+
+    // Fonction pour démarrer le quiz
+    const startQuiz = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            setShowQuiz(true);
+        }, 2000);
+    };
+
+    // Fonction pour gérer le clic sur le bouton "Trouver un joueur"
+    const findPlayer = () => {
+        // Logique pour lancer le matchmaking
+        // Par exemple, vous pouvez envoyer une requête au serveur WebSocket ici
+        // Mettez à jour l'état de l'interface utilisateur pour afficher "Recherche de joueur..."
+    };
+    const handleAnswerOptionClick = (isCorrect) => {
+        if (isCorrect) {
+            setScore(score + 1);
+        }
+        const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < questions.length) {
+            setCurrentQuestion(nextQuestion);
+        } else {
+            setShowQuiz(false);
+            setFinalMessageDisplayed(true); // Set final message flag
+        }
+    };
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
 
     const questions = [
         {
@@ -60,31 +94,6 @@ const QuizzPage = () => {
             ],
         },
     ];
-
-    const startQuiz = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            setShowQuiz(true);
-        }, 2000);
-    };
-
-    const handleAnswerOptionClick = (isCorrect) => {
-        if (isCorrect) {
-            setScore(score + 1);
-        }
-        const nextQuestion = currentQuestion + 1;
-        if (nextQuestion < questions.length) {
-            setCurrentQuestion(nextQuestion);
-        } else {
-            setShowQuiz(false);
-            setFinalMessageDisplayed(true); // Set final message flag
-        }
-    };
-
-    const handleCloseSnackbar = () => {
-        setOpenSnackbar(false);
-    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -134,6 +143,10 @@ const QuizzPage = () => {
                         </Snackbar>
                     </>
                 )}
+                {/* Bouton "Trouver un joueur" */}
+                <Button variant="contained" color="primary" onClick={findPlayer}>
+                    Trouver un joueur
+                </Button>
             </Box>
             <Footer />
         </ThemeProvider>
