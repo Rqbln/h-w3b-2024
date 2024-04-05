@@ -72,6 +72,42 @@
       "artifacts": [
         "Storage"
       ]
+    },
+    "C:\\Users\\Zoé\\Documents\\H-W3B\\h-w3b-2024\\web\\contracts\\test_sol.sol": {
+      "lastModificationDate": 1712348606951,
+      "contentHash": "9bdcefd447769b99b4b83c5c8e69647e",
+      "sourceName": "contracts/test_sol.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "Message"
+      ]
     }
   }
 }

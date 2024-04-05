@@ -1,4 +1,4 @@
-require("@nomiclabs/hardhat-ethers");
+require("@nomicfoundation/hardhat-ethers");
 require("dotenv").config();
 
 const { PRIVATE_KEY_1, PRIVATE_KEY_2, PRIVATE_KEY_3 } = process.env;
