@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme, Typography, Container, Button, Fade, CircularProgress, LinearProgress, Snackbar, Alert } from '@mui/material';
+import {
+    Box, CssBaseline, ThemeProvider, createTheme, Typography, Container,
+    Button, Fade, CircularProgress, LinearProgress, Snackbar, Alert
+} from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import Footer from '../landing-page/components/Footer';
@@ -13,6 +16,7 @@ const QuizzPage = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [finalMessageDisplayed, setFinalMessageDisplayed] = useState(false);
 
     const questions = [
         {
@@ -69,13 +73,12 @@ const QuizzPage = () => {
         if (isCorrect) {
             setScore(score + 1);
         }
-
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < questions.length) {
             setCurrentQuestion(nextQuestion);
         } else {
             setShowQuiz(false);
-            setOpenSnackbar(true);
+            setFinalMessageDisplayed(true); // Set final message flag
         }
     };
 
@@ -91,7 +94,7 @@ const QuizzPage = () => {
                 <Typography variant="h2" sx={{ mb: 2, color: theme.palette.text.primary }}>
                     Quiz Tezos
                 </Typography>
-                {!showQuiz && !loading && (
+                {!showQuiz && !loading && !finalMessageDisplayed && (
                     <Button variant="contained" color="secondary" onClick={startQuiz}>
                         Démarrer le Quiz
                     </Button>
@@ -115,15 +118,18 @@ const QuizzPage = () => {
                         </Fade>
                     </Container>
                 )}
-                {!showQuiz && !loading && currentQuestion === questions.length && (
+                {!showQuiz && finalMessageDisplayed && (
                     <>
                         <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
                             Quiz terminé ! Votre score est de {score} sur {questions.length}.
                         </Typography>
+                        <Button variant="contained" color="primary" onClick={() => setOpenSnackbar(true)}>
+                            Soumettre le score
+                        </Button>
                         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
                             <Alert onClose={handleCloseSnackbar} severity="success" sx={{ display: 'flex', alignItems: 'center' }}>
                                 <CheckCircleOutlineIcon sx={{ mr: 2 }} />
-                                Félicitations ! Votre score de {score} sur {questions.length} a été soumis.
+                                Félicitations ! Votre score de {score} sur {questions.length} a été soumis. Merci d'avoir participé.
                             </Alert>
                         </Snackbar>
                     </>
