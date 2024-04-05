@@ -27,11 +27,10 @@ wss.on('connection', function connection(ws) {
 });
 
 function startMatch(player1, player2) {
-    console.log('Démarrage d\'un match entre deux joueurs.');
-
-    // Envoyer un message aux joueurs pour démarrer le match
-    player1.send('match_start');
-    player2.send('match_start');
-
-    // Gérer la logique du match
+    console.log("Démarrage d'un match entre deux joueurs.");
+    // Notifier les deux joueurs
+    player1.send('Joueur trouvé !');
+    player2.send('Joueur trouvé !');
+    // Vous pouvez étendre la logique ici pour gérer le déroulement du match
 }
+

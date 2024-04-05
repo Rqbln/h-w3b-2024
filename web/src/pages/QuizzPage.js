@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Box, CssBaseline, ThemeProvider, createTheme, Typography, Container,
     Button, Fade, CircularProgress, LinearProgress, Snackbar, Alert
@@ -19,6 +19,10 @@ const QuizzPage = () => {
     const [score, setScore] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [finalMessageDisplayed, setFinalMessageDisplayed] = useState(false);
+    const [matchmakingStatus, setMatchmakingStatus] = useState({ searching: false, playerFound: false });
+    const [ws, setWs] = useState(null);
+
+
 
     // Fonction pour démarrer le quiz
     const startQuiz = () => {
@@ -29,11 +33,46 @@ const QuizzPage = () => {
         }, 2000);
     };
 
-    // Fonction pour gérer le clic sur le bouton "Trouver un joueur"
+    useEffect(() => {
+        // Établissement de la connexion WebSocket
+        const websocket = new WebSocket('ws://localhost:8080');
+        setWs(websocket);
+
+        websocket.onopen = () => {
+            console.log('Connexion WebSocket établie');
+        };
+
+        websocket.onmessage = (message) => {
+            const data = message.data;
+            console.log('Message reçu:', data);
+            if (data === 'match_start') {
+                setMatchmakingStatus({ searching: false, playerFound: true });
+                // Ajoutez ici d'autres logiques si nécessaire
+            }
+        };
+
+        websocket.onerror = (error) => {
+            console.error('Erreur WebSocket:', error);
+        };
+
+        // Nettoyage à la désinscription du composant
+        return () => {
+            websocket.close();
+        };
+    }, []);
+// Modifier la fonction findPlayer
     const findPlayer = () => {
-        // Logique pour lancer le matchmaking
-        // Par exemple, vous pouvez envoyer une requête au serveur WebSocket ici
-        // Mettez à jour l'état de l'interface utilisateur pour afficher "Recherche de joueur..."
+        setMatchmakingStatus({ searching: true, playerFound: false });
+        // Ici, vous pouvez intégrer la logique pour interagir avec le backend / WebSocket
+        // Simuler la recherche de joueur
+        setTimeout(() => {
+            console.log('Un joueur en attente dans le matchmaking');
+            // Simuler la connexion d'un deuxième joueur
+            setTimeout(() => {
+                console.log('Joueur trouvé !');
+                setMatchmakingStatus({ searching: false, playerFound: true });
+            }, 5000); // 5 secondes pour trouver un autre joueur
+        }, 2000); // Simuler 2 secondes d'attente
     };
     const handleAnswerOptionClick = (isCorrect) => {
         if (isCorrect) {
@@ -144,8 +183,8 @@ const QuizzPage = () => {
                     </>
                 )}
                 {/* Bouton "Trouver un joueur" */}
-                <Button variant="contained" color="primary" onClick={findPlayer}>
-                    Trouver un joueur
+                <Button variant="contained" color="secondary" onClick={findPlayer} disabled={matchmakingStatus.searching || matchmakingStatus.playerFound}>
+                    {matchmakingStatus.searching ? "Recherche de joueurs..." : matchmakingStatus.playerFound ? "Joueur trouvé !" : "Trouver un joueur"}
                 </Button>
             </Box>
             <Footer />
