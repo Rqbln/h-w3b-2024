@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme, IconButton, Avatar, Button, Box, AppBar, Toolbar, Container, Typography, MenuItem } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Web3 from 'web3';
+import { useWallet } from '../../components/walletConnection';
 
 const logoStyle = {
     width: '35px',
@@ -11,48 +12,24 @@ const logoStyle = {
 
 function AppAppBar({ mode, toggleColorMode }) {
     const [elevateAppBar, setElevateAppBar] = useState(false);
-    const [walletAddress, setWalletAddress] = useState(null);
+    const { walletAddress, loading, handleConnectWallet, getBalance } = useWallet();
     const [walletBalance, setWalletBalance] = useState(null);
     const theme = useTheme();
 
     useEffect(() => {
-        const initMetaMask = async () => {
-            if (window.ethereum) {
-                try {
-                    // Vérifier si les données de l'utilisateur sont stockées dans le localStorage
-                    const storedAddress = localStorage.getItem('walletAddress');
-                    const storedBalance = localStorage.getItem('walletBalance');
-
-                    if (storedAddress && storedBalance) {
-                        // Si les données existent, les utiliser
-                        setWalletAddress(storedAddress);
-                        setWalletBalance(storedBalance);
-                    } else {
-                        // Sinon, demander l'accès au compte et instancier web3
-                        await window.ethereum.request({ method: 'eth_requestAccounts' });
-                        const web3 = new Web3(window.ethereum);
-                        const accounts = await web3.eth.getAccounts();
-                        const address = accounts[0];
-                        setWalletAddress(address);
-                        const balance = await web3.eth.getBalance(address);
-                        setWalletBalance(web3.utils.fromWei(balance, 'ether')); // Convert to ether
-
-                        // Stocker les données dans le localStorage
-                        localStorage.setItem('walletAddress', address);
-                        localStorage.setItem('walletBalance', web3.utils.fromWei(balance, 'ether'));
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            } else {
-                alert('MetaMask not detected! Please install MetaMask.');
-            }
-        };
-
         window.addEventListener('scroll', () => setElevateAppBar(window.scrollY > 0));
-        initMetaMask();
         return () => window.removeEventListener('scroll', () => setElevateAppBar(window.scrollY > 0));
     }, []);
+
+    useEffect(() => {
+        const fetchBalance = async () => {
+            if (walletAddress) {
+                const balance = await getBalance(walletAddress);
+                setWalletBalance(balance);
+            }
+        };
+        fetchBalance();
+    }, [walletAddress, getBalance]);
 
     return (
         <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', mt: 2 }}>
@@ -124,11 +101,16 @@ function AppAppBar({ mode, toggleColorMode }) {
                             alignItems: 'center',
                         }}
                     >
-                        {walletAddress === null ? (
-                            <Typography variant="body2">Chargement...</Typography> // Afficher un message de chargement
+                        {loading ? (
+                            <Typography variant="body2">Chargement...</Typography>
                         ) : walletAddress ? (
                             <>
-                                <Typography variant="body2">{`52.47 XTZ`}</Typography>
+                                {walletBalance !== null ? ( // Check if walletBalance is not null
+                                    <Typography variant="body2">{parseFloat(walletBalance).toFixed(2)} NEON</Typography>
+                                ) : (
+                                    <Typography variant="body2">Loading balance...</Typography>
+                                )}
+
                                 <IconButton href="/account" size="small">
                                     <Avatar sx={{ bgcolor: 'secondary.main' }}>
                                         <AccountCircleIcon fontSize="small" />
@@ -137,7 +119,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                                 <Typography variant="body2">{`${walletAddress.slice(0, 10)}...`}</Typography>
                             </>
                         ) : (
-                            <Button color="secondary" variant="contained" onClick={() => window.ethereum.request({ method: 'eth_requestAccounts' })}>
+                            <Button color="secondary" variant="contained" onClick={handleConnectWallet}>
                                 Connect Wallet
                             </Button>
                         )}
