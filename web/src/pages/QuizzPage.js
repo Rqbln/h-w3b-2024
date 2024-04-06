@@ -1,89 +1,80 @@
-import React, {useEffect, useState} from 'react';
-import {
-    Box, CssBaseline, ThemeProvider, createTheme, Typography, Container,
-    Button, Fade, CircularProgress, LinearProgress, Snackbar, Alert
-} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, CssBaseline, ThemeProvider, createTheme, MenuItem,Typography, Container, Button, Fade, CircularProgress, LinearProgress} from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AppAppBar from '../landing-page/components/AppAppBar';
 import Footer from '../landing-page/components/Footer';
 import getLPTheme from '../landing-page/getLPTheme';
+import { useNavigate } from 'react-router-dom';
 
-// Définir le composant QuizzPage
 const QuizzPage = () => {
-    // Déclaration des états avec useState
     const [mode, setMode] = useState('dark');
     const theme = createTheme(getLPTheme(mode));
     const [loading, setLoading] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [, setOpenSnackbar] = useState(false);
     const [finalMessageDisplayed, setFinalMessageDisplayed] = useState(false);
-    const [matchmakingStatus, setMatchmakingStatus] = useState({ searching: false, playerFound: false });
     const [ws, setWs] = useState(null);
+    const [opponentScore, setOpponentScore] = useState(null);
+    const [resultMessage, setResultMessage] = useState('');
+    const navigate = useNavigate();
 
-
-
-    // Fonction pour démarrer le quiz
-    const startQuiz = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            setShowQuiz(true);
-        }, 2000);
+    const handleReturnToDuels = () => {
+        window.location.href = '/quizz';
     };
 
     useEffect(() => {
-        // Établissement de la connexion WebSocket
         const websocket = new WebSocket('ws://localhost:8080');
         setWs(websocket);
 
         websocket.onopen = () => {
-            console.log('Connexion WebSocket établie');
+            console.log('WebSocket connection established');
         };
 
         websocket.onmessage = (message) => {
-            const data = message.data;
-            console.log('Message reçu:', data);
-            if (data === 'match_start') {
-                setMatchmakingStatus({ searching: false, playerFound: true });
-                // Ajoutez ici d'autres logiques si nécessaire
+            const data = JSON.parse(message.data);
+            console.log('Message received:', data);
+            if (data.type === 'match') {
+                setShowQuiz(true);
+                setLoading(false);  // Arrêtez le chargement une fois que le match commence.
+            } else if (data.type === 'result') {
+                setFinalMessageDisplayed(true);
+                setShowQuiz(false);
+                setOpponentScore(data.opponentScore);
+                setResultMessage(data.result);
+                setLoading(false);  // Arrêtez le chargement une fois que les résultats sont reçus.
             }
         };
 
-        websocket.onerror = (error) => {
-            console.error('Erreur WebSocket:', error);
-        };
 
-        // Nettoyage à la désinscription du composant
+
         return () => {
             websocket.close();
         };
     }, []);
-// Modifier la fonction findPlayer
+
     const findPlayer = () => {
-        setMatchmakingStatus({ searching: true, playerFound: false });
-        // Ici, vous pouvez intégrer la logique pour interagir avec le backend / WebSocket
-        // Simuler la recherche de joueur
-        setTimeout(() => {
-            console.log('Un joueur en attente dans le matchmaking');
-            // Simuler la connexion d'un deuxième joueur
-            setTimeout(() => {
-                console.log('Joueur trouvé !');
-                setMatchmakingStatus({ searching: false, playerFound: true });
-            }, 5000); // 5 secondes pour trouver un autre joueur
-        }, 2000); // Simuler 2 secondes d'attente
+        const message = JSON.stringify({ type: 'findPlayer' });
+        ws.send(message);
+        setLoading(true);
     };
+
+
     const handleAnswerOptionClick = (isCorrect) => {
-        if (isCorrect) {
-            setScore(score + 1);
-        }
+        const nextScore = isCorrect ? score + 1 : score;
+        setScore(nextScore);
+
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < questions.length) {
             setCurrentQuestion(nextQuestion);
         } else {
             setShowQuiz(false);
-            setFinalMessageDisplayed(true); // Set final message flag
+            setFinalMessageDisplayed(true);
+            // Attendre que le score soit mis à jour avant d'envoyer
+            setTimeout(() => {
+                ws.send(JSON.stringify({ type: 'score', score: nextScore }));
+            }, 100); // Une légère temporisation pour s'assurer que l'état est mis à jour
         }
     };
 
@@ -139,15 +130,12 @@ const QuizzPage = () => {
             <CssBaseline />
             <AppAppBar mode={mode} toggleColorMode={() => setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))} />
             <Box sx={{ pt: 18, pb: 8, textAlign: 'center', width: '100%' }}>
-                <Typography variant="h2" sx={{ mb: 2, color: theme.palette.text.primary }}>
-                    Quiz Tezos
-                </Typography>
-                {!showQuiz && !loading && !finalMessageDisplayed && (
-                    <Button variant="contained" color="secondary" onClick={startQuiz}>
-                        Démarrer le Quiz
+                {!showQuiz && !loading && (
+                    <Button variant="contained" color="secondary" onClick={findPlayer}>
+                        Trouver un adversaire
                     </Button>
                 )}
-                {loading && <CircularProgress />}
+                {loading && !showQuiz && <CircularProgress />}
                 {showQuiz && (
                     <Container maxWidth="sm">
                         <Fade in={true} timeout={1000}>
@@ -166,26 +154,28 @@ const QuizzPage = () => {
                         </Fade>
                     </Container>
                 )}
-                {!showQuiz && finalMessageDisplayed && (
+                {finalMessageDisplayed && (
                     <>
-                        <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
-                            Quiz terminé ! Votre score est de {score} sur {questions.length}.
+                        <Typography variant="h5" sx={{ mt: 4 }}>
+                            Quiz terminé ! Votre score est de {score}.{opponentScore !== null ? ` Score de l'adversaire : ${opponentScore}.` : ' Score de l\'adversaire en attente...'}
                         </Typography>
-                        <Button variant="contained" color="primary" onClick={() => setOpenSnackbar(true)}>
-                            Soumettre le score
-                        </Button>
-                        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-                            <Alert onClose={handleCloseSnackbar} severity="success" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <CheckCircleOutlineIcon sx={{ mr: 2 }} />
-                                Félicitations ! Votre score de {score} sur {questions.length} a été soumis. Merci d'avoir participé.
-                            </Alert>
-                        </Snackbar>
+                        {opponentScore !== null && (
+                            <>
+                                <Typography variant="h6" sx={{ mt: 2 }}>
+                                    {resultMessage}
+                                </Typography>
+                                <Button variant="contained" color="secondary" onClick={handleReturnToDuels}>
+                                    Retour aux Duels
+                                </Button>
+                            </>
+                        )}
                     </>
                 )}
-                {/* Bouton "Trouver un joueur" */}
-                <Button variant="contained" color="secondary" onClick={findPlayer} disabled={matchmakingStatus.searching || matchmakingStatus.playerFound}>
-                    {matchmakingStatus.searching ? "Recherche de joueurs..." : matchmakingStatus.playerFound ? "Joueur trouvé !" : "Trouver un joueur"}
-                </Button>
+
+
+
+
+
             </Box>
             <Footer />
         </ThemeProvider>

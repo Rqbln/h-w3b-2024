@@ -30,7 +30,9 @@
     "web3": "^4.6.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "concurrently \"node matchmaking/matchmaking.js\" \"craco start\"",
+    "start:matchmaking": "node matchmaking/matchmaking.js",
+    "start:react": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
@@ -66,6 +68,7 @@
     "axios": "^1.6.8",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
     "ethers": "^6.1.0",
     "hardhat": "^2.22.2",
