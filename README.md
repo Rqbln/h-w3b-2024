@@ -4,29 +4,38 @@
 
 ## Description
 
-Ce référentiel contient le code source de la plateforme Wizos développée lors du hackaton `H-W3B` en mars 2024. 
-Wizos est une application proposant des formations / certifications décentralisées permettant de démarquer grâce à la blockchain les meilleurs développeurs, afin de leur offrir des ouvertures professionnelles.
+Ce référentiel contient le code source de la plateforme Wizos développée lors du hackathon `H-W3B` en mars 2024. Wizos est une application proposant des formations / certifications décentralisées permettant de distinguer les meilleurs développeurs grâce à la blockchain, afin de leur offrir des opportunités professionnelles.
 
 ## Structure du répertoire
 
-Le répertoire contient plusieurs dossiers et fichiers, dont voici une description sommaire :
+Le répertoire est organisé comme suit :
 
-- `web/`: Ce dossier contient le code source de l'application web Wizos.
-    - `public/`: Contient des ressources statiques telles que des images et des vidéos.
-    - `src/`: Contient le code source principal de l'application web.
-        - `landing-page/`: Contient les composants et les styles spécifiques à la page d'accueil.
-        - `pages/`: Contiendra les composants et les fichiers des différentes pages de l'application, tels que `QuizzPage.tsx`, `RankingPage.tsx`, `AboutPage.tsx`, etc.
-        - `components/`: Contient les composants réutilisables de l'application, tels que la barre de navigation, le pied de page, etc.
-        - ...
+- `classes/`: Contient les classes et la logique métier spécifiques aux fonctionnalités de quiz de l'application.
+- `db/`: Contient les scripts et configurations pour la base de données.
+- `matchmaking/`: Contient la logique pour le système de matchmaking.
+- `src/`: Contient le code source de l'application React.
+    - `components/`: Contient les composants réutilisables de l'application.
+    - `features/`: Contient des fonctionnalités spécifiques de l'application, comme les quiz.
+    - `pages/`: Contient les différents composants de page de l'application.
+    - `services/`: Contient les services utilisés dans l'application, comme les appels API.
+    - `utils/`: Contient divers utilitaires et fonctions d'aide.
+    - `theme/`: Contient le thème de toutes les pages de l'application React
+- `public/`: Contient des fichiers statiques comme les images et les fichiers HTML.
+- `hardhat/`: Ce sous-dossier est configuré pour le développement de contrats intelligents, utilisant Hardhat pour la compilation, le déploiement et le test de contrats sur Ethereum et potentiellement sur d'autres chaînes compatibles EVM.
 
 ## Installation et exécution
 
 1. Assurez-vous d'avoir `Node.js` installé sur votre système.
 2. Clonez ce référentiel sur votre machine locale.
-3. Naviguez vers le dossier `web/`.
-4. Exécutez `npm install` pour installer les dépendances.
-5. Exécutez `npm start` pour lancer l'application localement.
-6. Ouvrez votre navigateur web et accédez à l'URL `http://localhost:3000` pour utiliser la plateforme Wizos.
+3. Pour lancer l'application web :
+    - Naviguez vers le dossier `web/`.
+    - Exécutez `npm install` pour installer les dépendances.
+    - Exécutez `npm start` pour démarrer l'application localement.
+    - Accédez à `http://localhost:3000` dans votre navigateur pour utiliser la plateforme Wizos.
+4. Pour travailler avec les contrats intelligents :
+    - Naviguez vers le dossier `hardhat/`.
+    - Exécutez `npm install` pour installer les dépendances de Hardhat.
+    - Utilisez `npx hardhat compile` pour compiler les contrats, et `npx hardhat test` pour exécuter les tests.
 
 ## Licence
 
